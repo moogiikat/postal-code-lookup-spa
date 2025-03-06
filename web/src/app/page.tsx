@@ -4,7 +4,15 @@ import "./Home.scss";
 
 export default function Home() {
   const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState<any[]>([]);
+  const [address, setAddress] = useState<{
+    zipcode: string;
+    address1: string;
+    address2: string;
+    address3: string;
+    kana1: string;
+    kana2: string;
+    kana3: string;
+  }[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,8 +36,9 @@ export default function Home() {
       } else {
         setError(data.message || "検索中にエラーが発生しました。");
       }
-    } catch (err) {
+    } catch (error) {
       setError("APIリクエスト中にエラーが発生しました。");
+      console.error(error);
     } finally {
       setLoading(false);
     }
