@@ -5,7 +5,9 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
+import { useState, useEffect } from "react";
 
 interface SearchResult {
   address1: string;
@@ -27,16 +29,33 @@ interface SearchHistoryProps {
 }
 
 const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
   // 検索履歴を3件ずつのグループに分ける
   const groupedHistory = [];
   for (let i = 0; i < searchHistory.length; i += 3) {
     groupedHistory.push(searchHistory.slice(i, i + 3));
   }
 
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap());
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap());
+    });
+  }, [api, searchHistory]);
+
   return (
     <div className="search-history">
       <h2 className="search-history-title">検索履歴</h2>
-      <Carousel className="search-history-carousel">
+      <Carousel className="search-history-carousel" setApi={setApi}>
         <CarouselContent>
           {groupedHistory.map((group, groupIndex) => (
             <CarouselItem key={groupIndex}>
@@ -49,15 +68,19 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
                         <div key={resultIndex} className="history-address">
                           <p className="address-line">
                             <span className="address-label">住所:</span>
-                            {result.address1}
-                            {result.address2}
-                            {result.address3}
+                            <span className="address-line-text">
+                              {result.address1}
+                              {result.address2}
+                              {result.address3}
+                            </span>
                           </p>
                           <p className="kana">
                             <span className="kana-label">カナ:</span>
-                            {result.kana1}
-                            {result.kana2}
-                            {result.kana3}
+                            <span className="kana-line-text">
+                              {result.kana1}
+                              {result.kana2}
+                              {result.kana3}
+                            </span>
                           </p>
                         </div>
                       ))}
@@ -74,6 +97,21 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
         <CarouselPrevious className="carousel-prev" />
         <CarouselNext className="carousel-next" />
       </Carousel>
+
+      {count > 0 && (
+        <div className="flex justify-center w-full gap-1 mt-2">
+          {Array.from({ length: count }).map((_, i) => (
+            <button
+              key={i}
+              className={`h-2 rounded-full transition-all ${
+                i === current ? "w-4 bg-primary" : "w-2 bg-primary/50"
+              }`}
+              onClick={() => api?.scrollTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

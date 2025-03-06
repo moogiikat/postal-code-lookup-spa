@@ -3,29 +3,29 @@ import { useState } from "react";
 import "./Home.scss";
 import SearchHistory from "./components/search_history";
 
+interface SearchResult {
+  zipcode: string;
+  address1: string;
+  address2: string;
+  address3: string;
+  kana1: string;
+  kana2: string;
+  kana3: string;
+  prefcode: string;
+}
+
+interface SearchHistoryItem {
+  zipcode: string;
+  results: SearchResult[];
+  timestamp: number;
+}
+
 export default function Home() {
   const [zipcode, setZipcode] = useState("");
-  const [address, setAddress] = useState<
-    {
-      zipcode: string;
-      address1: string;
-      address2: string;
-      address3: string;
-      kana1: string;
-      kana2: string;
-      kana3: string;
-      prefcode: string;
-    }[]
-  >([]);
+  const [address, setAddress] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [searchHistory, setSearchHistory] = useState<
-    {
-      zipcode: string;
-      results: typeof address;
-      timestamp: number;
-    }[]
-  >([]);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
 
   // Validate zipcode format
   const validateZipcode = (
@@ -157,8 +157,10 @@ export default function Home() {
             ))}
           </div>
         )}
-        {address && address.length === 0 && !error && !loading && (
-          <p className="no-results">該当する住所が見つかりませんでした。</p>
+        {loading && (
+          <p className="loading">
+            <span className="spinner"></span>
+          </p>
         )}
       </div>
       <div className="search-history-container">
