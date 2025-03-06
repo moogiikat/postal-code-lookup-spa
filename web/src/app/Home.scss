@@ -1,0 +1,89 @@
+.main {
+  background-color: $secondary-color;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 28rem; // equivalent to max-w-md
+  background-color: $secondary-color;
+  color: $primary-color;
+
+  h1 {
+    font-size: 1.875rem; // text-3xl
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem; // mb-8
+  }
+
+  .description {
+    text-align: center;
+    margin-bottom: 1rem; // mb-4
+  }
+
+  .search-form {
+    display: flex;
+    margin-bottom: 1rem; // mb-4
+
+    input {
+      flex-grow: 1;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db; // border-gray-300
+      border-top-left-radius: 0.25rem;
+      border-bottom-left-radius: 0.25rem;
+      font-size: 1.125rem; // Increased font size for better readability
+    }
+
+    button {
+      background-color: #3b82f6; // Changed to blue (bg-blue-500)
+      color: white; // Added white text
+      padding: 0.5rem 1.5rem;
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+      font-weight: 500;
+
+      &:hover {
+        background-color: #2563eb; // hover:bg-blue-600
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .error {
+    color: #ef4444; // text-red-500
+    margin-bottom: 1rem; // mb-4
+    text-align: center; // Center error message
+    font-size: 0.875rem; // text-sm
+  }
+
+  .results {
+    margin-top: 1.5rem; // mt-6
+
+    h2 {
+      font-size: 1.25rem; // text-xl
+      font-weight: 600; // font-semibold
+      margin-bottom: 0.5rem; // mb-2
+    }
+
+    .address-item {
+      border: 1px solid #d1d5db;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 0.5rem; // mb-2
+
+      .kana {
+        color: #6b7280; // text-gray-500
+        font-size: 0.875rem; // text-sm
+      }
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    margin-top: 1rem; // mt-4
+  }
+} 
