@@ -1,24 +1,12 @@
 "use client";
 import { useState } from "react";
+
+import { validateZipcode } from "@/lib/utils";
+
 import "./Home.scss";
 import SearchHistory from "./components/search_history";
-
-interface SearchResult {
-  zipcode: string;
-  address1: string;
-  address2: string;
-  address3: string;
-  kana1: string;
-  kana2: string;
-  kana3: string;
-  prefcode: string;
-}
-
-interface SearchHistoryItem {
-  zipcode: string;
-  results: SearchResult[];
-  timestamp: number;
-}
+import SearchResultComponent from "./components/search_result";
+import { SearchResult, SearchHistoryItem, ApiResponse } from "./types";
 
 export default function Home() {
   const [zipcode, setZipcode] = useState("");
@@ -26,32 +14,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
-
-  // Validate zipcode format
-  const validateZipcode = (
-    code: string
-  ): { isValid: boolean; message: string } => {
-    // Check if input contains only numbers and hyphens
-    if (!/^[0-9-]+$/.test(code)) {
-      return {
-        isValid: false,
-        message:
-          "郵便番号は半角数字のみまたは半角数字とハイフンのみで入力してください。",
-      };
-    }
-
-    // Check if format is either 000-0000 or 0000000
-    const cleanCode = code.replace(/-/g, "");
-    if (cleanCode.length !== 7 || (code.includes("-") && code.length !== 8)) {
-      return {
-        isValid: false,
-        message:
-          "郵便番号は半角数字でハイフンありの8桁かハイフンなしの7桁で入力してください。",
-      };
-    }
-
-    return { isValid: true, message: "" };
-  };
 
   const searchAddress = async () => {
     // Reset states
@@ -74,7 +36,7 @@ export default function Home() {
       const response = await fetch(
         `https://zipcloud.ibsnet.co.jp/api/search?zipcode=${cleanZipcode}`
       );
-      const data = await response.json();
+      const data: ApiResponse = await response.json();
 
       if (data.status === 200) {
         if (data.results) {
@@ -84,7 +46,7 @@ export default function Home() {
           setSearchHistory((prev) => [
             {
               zipcode: cleanZipcode,
-              results: data.results,
+              results: data.results || [],
               timestamp: Date.now(),
             },
             ...prev,
@@ -142,20 +104,7 @@ export default function Home() {
         </div>
         {error && <p className="error">{error}</p>}
         {address && address.length > 0 && (
-          <div className="results">
-            <h2>検索結果:</h2>
-            {address.map((item, index) => (
-              <div key={index} className="address-item">
-                <p>〒{item.zipcode}</p>
-                <p>
-                  {item.address1} {item.address2} {item.address3}
-                </p>
-                <p className="kana">
-                  {item.kana1} {item.kana2} {item.kana3}
-                </p>
-              </div>
-            ))}
-          </div>
+          <SearchResultComponent address={address} />
         )}
         {loading && (
           <p className="loading">

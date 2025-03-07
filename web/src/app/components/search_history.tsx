@@ -8,21 +8,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useState, useEffect } from "react";
-
-interface SearchResult {
-  address1: string;
-  address2: string;
-  address3: string;
-  kana1: string;
-  kana2: string;
-  kana3: string;
-}
-
-interface SearchHistoryItem {
-  zipcode: string;
-  results: SearchResult[];
-  timestamp: number;
-}
+import { SearchHistoryItem } from "../types";
 
 interface SearchHistoryProps {
   searchHistory: SearchHistoryItem[];
