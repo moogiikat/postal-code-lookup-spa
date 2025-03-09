@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ## Requirements
 
 - Node.js 18.x or later
-- npm 9.x or later (or yarn/pnpm/bun)
+- pnpm 9.x or later
 
 ## Local Setup
 
@@ -17,38 +17,31 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 2. Install dependencies
 
    ```bash
-   npm install
-   # or
-   yarn install
-   # or
    pnpm install
-   # or
-   bun install
    ```
-
-3. Set up environment variables
-   ```bash
-   cp .env.example .env.local
-   ```
-   Then edit `.env.local` with your configuration values.
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 ## Running Playwright Tests
 
 ```bash
-pnpm dev
+pnpm exec playwright test
+```
+
+## Running Playwright Tests in UI Mode
+
+```bash
 pnpm exec playwright test --ui
+```
+
+## Show Playwright Test Report
+
+```bash
+pnpm exec playwright show-report
 ```
