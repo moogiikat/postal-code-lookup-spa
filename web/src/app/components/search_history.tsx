@@ -49,28 +49,30 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
               <div className="search-history-grid">
                 {group.map((item, index) => (
                   <div key={index} className="history-card">
-                    <p className="zipcode-label">郵便番号: {item.zipcode}</p>
-                    <div className="history-results">
-                      {item.results.map((result, resultIndex) => (
-                        <div key={resultIndex} className="history-address">
-                          <p className="address-line">
-                            <span className="address-label">住所:</span>
-                            <span className="address-line-text">
-                              {result.address1}
-                              {result.address2}
-                              {result.address3}
-                            </span>
-                          </p>
-                          <p className="kana">
-                            <span className="kana-label">カナ:</span>
-                            <span className="kana-line-text">
-                              {result.kana1}
-                              {result.kana2}
-                              {result.kana3}
-                            </span>
-                          </p>
-                        </div>
-                      ))}
+                    <div>
+                      <p className="zipcode-label">郵便番号: {item.zipcode}</p>
+                      <div className="history-results">
+                        {item.results.map((result, resultIndex) => (
+                          <div key={resultIndex} className="history-address">
+                            <p className="address-line">
+                              <span className="address-label">住所:</span>
+                              <span className="address-line-text">
+                                {result.address1}
+                                {result.address2}
+                                {result.address3}
+                              </span>
+                            </p>
+                            <p className="kana">
+                              <span className="kana-label">カナ:</span>
+                              <span className="kana-line-text">
+                                {result.kana1}
+                                {result.kana2}
+                                {result.kana3}
+                              </span>
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     <p className="timestamp">
                       {new Date(item.timestamp).toLocaleString("ja-JP")}
@@ -86,13 +88,11 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
       </Carousel>
 
       {count > 0 && (
-        <div className="flex justify-center w-full gap-1 mt-2">
+        <div className="carousel-indicators">
           {Array.from({ length: count }).map((_, i) => (
             <button
               key={i}
-              className={`h-2 rounded-full transition-all ${
-                i === current ? "w-4 bg-blue-500" : "w-2 bg-blue-500/50"
-              }`}
+              className={`indicator ${i === current ? "active" : ""}`}
               onClick={() => api?.scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
             />
