@@ -45,3 +45,10 @@ pnpm dev
 # or
 bun dev
 ```
+
+## Running Playwright Tests
+
+```bash
+pnpm dev
+pnpm exec playwright test --ui
+```
