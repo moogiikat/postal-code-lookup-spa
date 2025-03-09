@@ -1,0 +1,93 @@
+.search-history-container {
+  margin: 0 auto;
+  padding: 1rem;
+  max-width: 58rem;
+  color: $text-color;
+  // Search History Component
+  .search-history {
+    &-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    &-carousel {
+      width: 100%;
+      padding: 0 2.5rem;
+    }
+
+    &-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+
+  .history-card {
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    background-color: $secondary-color;
+    height: 285px;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+
+  .zipcode-label {
+    font-weight: 600;
+    border-bottom: 3px solid $primary-color;
+  }
+
+  .history-results {
+    margin-top: 0.5rem;
+  }
+
+  .history-address {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .address-label,
+  .kana-label {
+    font-weight: 500;
+    padding-right: 0.2rem;
+  }
+
+  .kana-line-text {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .timestamp {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+  }
+
+  .carousel-prev {
+    left: 0;
+    color: $secondary-color;
+    background-color: $primary-color;
+    &:hover {
+      background-color: $button-hover-color;
+    }
+  }
+
+  .carousel-next {
+    right: 0;
+    color: $secondary-color;
+    background-color: $primary-color;
+    &:hover {
+      background-color: $button-hover-color;
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import React from "react";
+import React from "react"
+import { useState, useEffect } from "react"
 import {
   Carousel,
   CarouselContent,
@@ -6,37 +7,37 @@ import {
   CarouselNext,
   CarouselPrevious,
   type CarouselApi,
-} from "@/components/ui/carousel";
-import { useState, useEffect } from "react";
-import { SearchHistoryItem } from "../types";
+} from "@/components/ui/carousel"
+import "@/app/scss/search_history.scss"
+
+import { SearchHistoryItem } from "../types"
 
 interface SearchHistoryProps {
-  searchHistory: SearchHistoryItem[];
+  searchHistory: SearchHistoryItem[]
 }
 
 const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const [count, setCount] = useState(0)
 
-  // 検索履歴を3件ずつのグループに分ける
-  const groupedHistory = [];
+  const groupedHistory = []
   for (let i = 0; i < searchHistory.length; i += 3) {
-    groupedHistory.push(searchHistory.slice(i, i + 3));
+    groupedHistory.push(searchHistory.slice(i, i + 3))
   }
 
   useEffect(() => {
     if (!api) {
-      return;
+      return
     }
 
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap());
+    setCount(api.scrollSnapList().length)
+    setCurrent(api.selectedScrollSnap())
 
     api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api, searchHistory]);
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api, searchHistory])
 
   return (
     <div className="search-history">
@@ -90,7 +91,7 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
             <button
               key={i}
               className={`h-2 rounded-full transition-all ${
-                i === current ? "w-4 bg-primary" : "w-2 bg-primary/50"
+                i === current ? "w-4 bg-blue-500" : "w-2 bg-blue-500/50"
               }`}
               onClick={() => api?.scrollTo(i)}
               aria-label={`Go to slide ${i + 1}`}
@@ -99,7 +100,7 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({ searchHistory }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SearchHistory;
+export default SearchHistory
