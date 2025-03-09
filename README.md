@@ -42,6 +42,10 @@ pnpm exec playwright test --ui
 
 ## Show Playwright Test Report
 
+https://github.com/user-attachments/assets/5081ca1c-81e0-4d7c-9ae1-ab514a2350c9
+
+
+
 ```bash
 pnpm exec playwright show-report
 ```
