@@ -46,4 +46,5 @@ pnpm exec playwright test --ui
 pnpm exec playwright show-report
 ```
 ![Screenshot 2025-03-09 at 21 44 43](https://github.com/user-attachments/assets/54d2e9ca-0a54-44eb-9282-4b343cf53fe0)
+
 https://github.com/user-attachments/assets/5081ca1c-81e0-4d7c-9ae1-ab514a2350c9
